@@ -15,6 +15,7 @@ namespace UserMangment.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<IdentityUser>().ToTable("User", "Security");
             builder.Entity<ApplicationUser>().ToTable("User", "Security");
             builder.Entity<IdentityRole>().ToTable("Role", "Security");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRole", "Security");
