@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
+using UserMangment.Helper;
 using UserMangment.Models;
 
 namespace UserMangment.Controllers
@@ -17,6 +20,7 @@ namespace UserMangment.Controllers
         {
             return View();
         }
+        [Authorize(Roles =ApplicationRoleName.Admin)]
 
         public IActionResult Privacy()
         {
