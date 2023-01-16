@@ -1,0 +1,43 @@
+﻿@model IEnumerable<UserRoleVM>
+
+<h1>Roles</h1>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userRole in Model)
+        {
+            <tr>
+                <td>
+                    @userRole.UserName
+                </td>
+                <td>
+                    @userRole.FirstName
+                </td>
+                <td>
+                    @userRole.LastName
+                </td>
+                <td>
+                    @userRole.Email
+                </td>
+
+                <td>
+                    @string.Join(" , ", userRole.Roles)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="User" asp-action="ManageRole" asp-route-userId="@userRole.UserID">Manage Roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

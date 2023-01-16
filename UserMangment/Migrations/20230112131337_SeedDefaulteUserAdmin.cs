@@ -61,6 +61,12 @@ namespace UserMangment.Migrations
               schema: "Security",
               columns: new[] { "UserId", "RoleId" },
               values: new object[] { AdminUserID, AdminUserRoleID });
+
+            migrationBuilder.InsertData(
+            table: "UserRole",
+            schema: "Security",
+            columns: new[] { "UserId", "RoleId" },
+            values: new object[] { AdminUserID, userRoleID });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
