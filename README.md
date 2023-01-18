@@ -1,10 +1,11 @@
 # UserMangment
  asp core identity example
+ 
 ## Tech
-*asp core MVC
-*endity core 
-*.net 6
-*identy user mangment
+* asp core MVC
+* endity core 
+* .net 6
+* identy user mangment
 
 
 ## Prerequirements
