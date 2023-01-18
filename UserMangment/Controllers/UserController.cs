@@ -67,18 +67,79 @@ namespace UserMangment.Controllers
 
             foreach (var role in userRoleRequestVM.Roles)
             {
-                if(role.IsSelected) {
+                 
+                if (role.IsSelected) {
                     await  _userManager.AddToRoleAsync(user, role.RoleName);
                 }
                 else {
                     await _userManager.RemoveFromRoleAsync(user, role.RoleName);
-
                 }
             }
 
-            
 
             return RedirectToAction(nameof(ShowUser));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return NotFound();
+
+            var roles = await _roleManager.Roles.ToListAsync();
+            var viewModel = new EditUserVM
+            {
+                UserID = user.Id,
+                Username = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Roles = roles.Select(r => new RoleVM
+                {
+                    RoleID = r.Id,
+                    RoleName = r.Name,
+                    IsSelected = _userManager.IsInRoleAsync(user, r.Name).Result
+                }).ToList()
+
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+         
+        public async Task<IActionResult> EditUser(EditUserVM requestData)
+        {
+
+            var user = await _userManager.FindByIdAsync(requestData.UserID);
+            if (user == null) return NotFound();
+
+            user.FirstName= requestData.FirstName;  
+            user.LastName= requestData.LastName;
+            user.Email= requestData.Email;
+            await _userManager.UpdateAsync(user);
+
+
+            foreach (var role in requestData.Roles)
+            {
+
+                if (role.IsSelected)
+                {
+                    await _userManager.AddToRoleAsync(user, role.RoleName);
+                }
+                else
+                {
+                    await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+                }
+            }
+
+
+            return RedirectToAction(nameof(ShowUser));
+
+
+            return Ok();
+        }
+
+
     }
 }

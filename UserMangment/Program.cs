@@ -25,20 +25,27 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.SignIn.RequireConfirmedAccount = false;
     options.SignIn.RequireConfirmedEmail = false;
  }) .AddEntityFrameworkStores<ApplicationDbContext>()
-.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
+.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider) 
+    .AddRoles<IdentityRole>();
 
- 
- 
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.LoginPath = "/Identity/Account/Login";
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.Headers["Location"] = context.RedirectUri;
+        context.Response.StatusCode = 401;
+        return Task.CompletedTask;
+    };
 });
 
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHealthChecks();
 builder.Services.AddMvc();
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,7 +62,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
- app.UseRouting();
+app.UseRouting();
 
 
 app.UseAuthentication();

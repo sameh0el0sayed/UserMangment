@@ -1,0 +1,102 @@
+﻿@model UserMangment.ViewModels.EditUserVM
+
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<h1>Edit User</h1>
+ 
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="editUserForm" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserID"  />
+
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+             <div class="m-2">
+                @for (int i = 0; i < Model.Roles.Count; i++)
+                {
+                        <div class="form-check m-1">
+                            <input type="hidden" asp-for="@Model.Roles[i].RoleName" />
+                 <input asp-for="@Model.Roles[i].IsSelected" class="form-check-input" />
+                            <label class="form-check-label" asp-for="@Model.Roles[i].IsSelected">
+                            @Model.Roles[i].RoleName
+                            </label>
+                        </div>
+                }
+            </div>
+
+            <div class="form-group">
+                <!--
+                <a href="javascript:void(0);" onclick="saveFun()" class="btn btn-primary">Save</a>
+
+                                -->
+                <input type="submit" class="btn btn-info" value="Save" />
+
+            </div>
+           
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ShowUser">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<!--
+ <script>
+     function saveFun() {
+        let formValid = $('#editUserForm').valid();
+        let _form = $('form').serializeArray();
+        var _data={
+            FirstName:"",
+            LastName: "",
+            Email: ""
+        }
+
+         if (formValid){
+            $.ajax({
+                url: "/api/UserApi/EditUser",
+                data: _form,
+                //headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                method:"Post",
+                success:function(data){
+                    alert("success");
+                },
+                error:function(){
+
+                }
+            });
+             
+        }
+          
+
+     }
+    
+ </script> 
+  -->

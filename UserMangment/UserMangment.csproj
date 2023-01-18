@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\htmlpage.html" />
+  </ItemGroup>
+
 </Project>
