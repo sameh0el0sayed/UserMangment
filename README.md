@@ -2,10 +2,10 @@
  asp core identity example
  
 ## Tech
-* asp core MVC
-* endity core 
-* .net 6
-* identy user mangment
+* ASP core MVC
+* Entity core framework
+* .Net 6
+* identity user authentication
 
 
 ## Prerequirements
