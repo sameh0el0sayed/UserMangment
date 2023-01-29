@@ -17,5 +17,6 @@
 ## How To Run
 
 * Open solution in Visual Studio  
-* Set .Web project as Startup Project and build the project.
+* Set your information in appsettings.json
+* update the database
 * Run the application.
